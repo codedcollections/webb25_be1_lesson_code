@@ -8,7 +8,7 @@ import {
   deleteSong,
 } from "../db/songs.js"
 
-import { getArtistByName } from "../db/artists.js"
+import { getAllArtists, getArtistByName } from "../db/artists.js"
 const songRouter = Router()
 
 /* let songs = [
@@ -24,7 +24,7 @@ const songRouter = Router()
 //B2
 songRouter.get("/", async (req, res) => {
   const songs = await getAllSongs()
-  const { q, artist, sort, limit } = req.query
+  const { q, artist, sort, limit, withAuthor } = req.query
 
   let filteredSongs = songs.filter((song) => !song.deleted)
 
@@ -61,6 +61,12 @@ songRouter.get("/", async (req, res) => {
     }
     filteredSongs = filteredSongs.slice(0, limitNum)
   }
+  if (withAuthor) {
+    const artists = await getAllArtists()
+    filteredSongs = songs.filter((song) =>
+      artists.map((a) => a.name).includes(song.artist),
+    )
+  }
 
   return res.json(filteredSongs)
 })
@@ -73,7 +79,7 @@ songRouter.get("/:id", async (req, res) => {
     })
   }
   const song = await getSongByid(id)
-
+  console.log(JSON.stringify(song))
   //B3
   if (!song || song.deleted === true) {
     return res.status(404).json({
@@ -81,11 +87,12 @@ songRouter.get("/:id", async (req, res) => {
     })
   }
   const artist = await getArtistByName(song.artist)
-  console.log("the found artist in getartistbyname" + artist)
+  if (!artist) {
+    return res.status(404).json({
+      message: "Artist does not match",
+    })
+  }
   song.artist = artist
-  console.log(
-    "Song object after adding artist object inside" + JSON.stringify(song),
-  )
   return res.json(song)
 })
 
