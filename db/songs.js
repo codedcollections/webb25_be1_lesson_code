@@ -1,5 +1,4 @@
 import fs from "fs/promises"
-
 const DATA_PATH = new URL("../data/songs.json", import.meta.url)
 
 async function readSongs() {

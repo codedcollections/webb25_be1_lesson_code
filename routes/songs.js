@@ -7,6 +7,8 @@ import {
   updateSong,
   deleteSong,
 } from "../db/songs.js"
+
+import { getArtistByName } from "../db/artists.js"
 const songRouter = Router()
 
 /* let songs = [
@@ -71,12 +73,19 @@ songRouter.get("/:id", async (req, res) => {
     })
   }
   const song = await getSongByid(id)
+
   //B3
   if (!song || song.deleted === true) {
     return res.status(404).json({
       message: "Song does not exist",
     })
   }
+  const artist = await getArtistByName(song.artist)
+  console.log("the found artist in getartistbyname" + artist)
+  song.artist = artist
+  console.log(
+    "Song object after adding artist object inside" + JSON.stringify(song),
+  )
   return res.json(song)
 })
 

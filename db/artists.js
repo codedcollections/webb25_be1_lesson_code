@@ -43,6 +43,11 @@ export async function getArtistByid(id) {
   return _artists.find((artist) => artist.id === id) || null
 }
 
+export async function getArtistByName(name) {
+  const _artists = await readArtists()
+  return _artists.find((artist) => artist.name === name) || null
+}
+
 export async function createArtist(data) {
   const _artists = await readArtists()
   const lastId = Math.max(..._artists.map((a) => a.id)) || 0
