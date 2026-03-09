@@ -1,3 +1,4 @@
+import slugify from "slugify";
 import Artist from "../models/Artist.js";
 import { getFullTextSearch } from "../utils/fullTextSearch.js";
 
@@ -29,7 +30,9 @@ export async function getArtistByid(id) {
 
 export async function createArtist(data) {
   try {
-    return await Artist.create(data);
+    const newArtist = new Artist(data)
+    await newArtist.save()
+    return newArtist
   } catch (err) {
     console.error("Unable to create 'Artist'", err)
     return null
@@ -38,8 +41,10 @@ export async function createArtist(data) {
 
 export async function updateArtist(id, data) {
   try {
-    const updatedArtist = await Artist.findByIdAndUpdate(id, data, { returnDocument: "after" });
+    const updatedArtist = await Artist.findById(id)
     if (!updatedArtist) return null;
+    updatedArtist.name = data.name ?? updatedArtist.name
+    await updatedArtist.save()
     return updatedArtist;
   } catch (err) {
     console.error("Unable to update 'Artist'", err)
