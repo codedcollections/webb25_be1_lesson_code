@@ -1,0 +1,29 @@
+[
+    {
+  "name": "Chill Vibes",
+  "description": "Relax and unwind with mellow tracks.",
+  "songs": [
+    "69a896ef1b396e2d9ab8c644",
+    "69a896ef1b396e2d9ab8c646", 
+    "69a896ef1b396e2d9ab8c650" 
+  ]
+},
+{
+  "name": "Party Hits",
+  "description": "Upbeat tracks to get the party started!",
+  "songs": [
+    "69a896ef1b396e2d9ab8c647",
+    "69a896ef1b396e2d9ab8c648", 
+    "69a896ef1b396e2d9ab8c65e"   
+  ]
+},
+{
+  "name": "Focus & Study",
+  "description": "Ambient and calm tracks to stay productive.",
+  "songs": [
+    "69a896ef1b396e2d9ab8c64c", 
+    "69a896ef1b396e2d9ab8c664", 
+    "69a896ef1b396e2d9ab8c66a" 
+  ]
+}
+]
